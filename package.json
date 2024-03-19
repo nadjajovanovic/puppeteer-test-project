@@ -1,0 +1,23 @@
+{
+  "name": "puppeteer_test_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc --outDir src && cd src && node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^22.5.0",
+    "puppeteer-cluster": "^0.24.0",
+    "puppeteer-debug": "^2.1.1",
+    "typescript": "^5.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.28",
+    "@types/puppeteer": "^7.0.4"
+  }
+}
