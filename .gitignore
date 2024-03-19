@@ -1,3 +1,7 @@
 /node_modules
 /src/*.js
 /src/tmp
+/src/pages/*.js
+/src/services/*.js
+/src/util/*.js
+/src/utils/*.js
