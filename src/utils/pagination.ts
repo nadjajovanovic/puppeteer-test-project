@@ -1,4 +1,5 @@
 import { ElementHandle } from "puppeteer";
+import { limiter } from "./consts";
 
 export async function pagination(
   cluster: any,
@@ -7,9 +8,11 @@ export async function pagination(
 ) {
   //Navigate to product detail page
   await cluster.task(async ({ page }) => {
-    await page.goto(url);
+    await limiter.schedule(async () => {
+      await page.goto(url);
+    })
 
-    await productHandle;
+    productHandle;
 
     let lastPageReached = false;
 

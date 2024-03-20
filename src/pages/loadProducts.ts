@@ -1,32 +1,21 @@
 import { ElementHandle } from "puppeteer";
 import { saveAllProductsToFile } from "../services/saveDataToFile";
-import { Cluster } from "puppeteer-cluster";
 import { goToProductDetailsPage } from "./loadProductDetailPage";
 import { goToCartPage } from "./loadCartPage";
-//import { anonymizeUaPlugin, baseUrl, paginationUrl, puppeteer, stealthPlugin } from "../utils/consts";
-import { pagination } from "../util/pagination";
-import { baseUrl, paginationUrl } from "../utils/consts";
+import { anonymizeUaPlugin, baseUrl, limiter, paginationUrl, puppeteer, stealthPlugin } from "../utils/consts";
+import { pagination } from "../utils/pagination";
+import launchPuppeteerCluster from "../utils/launchPuppeteerCluster";
 
-// Enable the Stealth plugin with all evasions
-/* puppeteer.use(stealthPlugin());
-
-puppeteer.use(anonymizeUaPlugin()); */
+puppeteer.use(stealthPlugin());
+puppeteer.use(anonymizeUaPlugin());
 
 export async function loadProducts() {
-  const cluster = await Cluster.launch({
-    concurrency: Cluster.CONCURRENCY_PAGE,
-    maxConcurrency: 100,
-    monitor: true,
-    puppeteerOptions: {
-      headless: false,
-      /* args: ['--no-sandbox'], */
-      defaultViewport: null,
-      userDataDir: "./tmp",
-    },
-  });
+  const cluster = await launchPuppeteerCluster();
 
   await cluster.task(async ({ page, data: url }) => {
-    await page.goto(url);
+    await limiter.schedule(async () => {
+      await page.goto(url);
+    })
 
     let productHandles: ElementHandle<HTMLLIElement>[];
     let productName: string;
@@ -75,7 +64,7 @@ export async function loadProducts() {
             el.querySelector("div.v2-listing-card > a").getAttribute("href"),
           productHandle
         );
-        //goToProductDetailsPage(cluster, listingUrl);
+        goToProductDetailsPage(cluster, listingUrl);
       } catch (error) {
         console.log(error);
       }
@@ -84,13 +73,13 @@ export async function loadProducts() {
     }
 
     //saving extracted data to file
-    //saveAllProductsToFile(products, 'products.json');
+    saveAllProductsToFile(products, 'products.json');
 
     const checkoutPageButton = await page.$('nav > ul > li:nth-child(3) > span > a');
     const checkoutUrl = await checkoutPageButton.evaluate( (form: any) => form.getAttribute('href'));
     goToCartPage(cluster, checkoutUrl);
     
-    //pagination(cluster, paginationUrl, productHandles);
+    pagination(cluster, paginationUrl, productHandles);
   });
   
 

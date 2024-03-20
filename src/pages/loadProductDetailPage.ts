@@ -1,4 +1,5 @@
 import { saveAllProductsToFile } from "../services/saveDataToFile";
+import { limiter } from "../utils/consts";
 
 let productName: string;
 let productPrice: string;
@@ -9,7 +10,10 @@ let imageUrl: string;
 export async function goToProductDetailsPage(cluster: any, url: any) {
   //Navigate to product detail page
     await cluster.task(async ({ page }) => {
-      await page.goto(url);
+      await limiter.schedule(async () => {
+        await page.goto(url);
+      })
+      
       let product = [];
       let productImageUrls = [];
   

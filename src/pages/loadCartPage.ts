@@ -1,8 +1,11 @@
+import { limiter } from "../utils/consts";
+
 export async function goToCartPage(cluster: any, url: any) {
   //Navigate to cart page
   await cluster.task(async ({ page }) => {
-    await page.goto(url);
-
+    await limiter.schedule(async () => {
+      await page.goto(url);
+    })
     //extracting proced to checkout
     const proceedToCheckout = await page.$("button.proceed-to-checkout");
     //clicking to button

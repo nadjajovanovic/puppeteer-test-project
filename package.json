@@ -11,9 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bottleneck": "^2.19.5",
     "puppeteer": "^22.5.0",
     "puppeteer-cluster": "^0.24.0",
     "puppeteer-debug": "^2.1.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-anonymize-ua": "^2.4.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "typescript": "^5.4.2"
   },
   "devDependencies": {
