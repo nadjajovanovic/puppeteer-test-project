@@ -1,6 +1,4 @@
 {
     "productUrl": "https://www.etsy.com/c",
-    "signInUrl":"https://www.etsy.com/signin",
-    "signUpUrl": "https://www.etsy.com/join",
     "baseUrl": "https://www.etsy.com/"
 }

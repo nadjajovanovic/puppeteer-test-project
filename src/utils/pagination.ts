@@ -1,4 +1,4 @@
-import { ElementHandle } from "puppeteer";
+import { ElementHandle, Page } from "puppeteer";
 import { limiter } from "./consts";
 
 export async function pagination(
@@ -22,21 +22,17 @@ export async function pagination(
       );
 
       if (!nextPageLink) {
-        console.log("No more pages. Exiting.");
         lastPageReached = true;
       } else {
         await nextPageLink.evaluate((form: any) => form.click());
 
         await page.waitForNavigation();
 
-        const URL = page.url();
-        console.log(URL);
-
-        await productHandle;
+        productHandle;
       }
     }
     await cluster.idle();
-    /* await cluster.close();  */
+    await cluster.close(); 
   });
   await cluster.queue(url);
 }

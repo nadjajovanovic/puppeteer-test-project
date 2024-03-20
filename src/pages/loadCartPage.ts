@@ -9,7 +9,7 @@ export async function goToCartPage(cluster: any, url: any) {
     //extracting proced to checkout
     const proceedToCheckout = await page.$("button.proceed-to-checkout");
     //clicking to button
-    await proceedToCheckout.evaluate((button: any) => button.click());
+    await proceedToCheckout.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
 
     //waitng for dialog to open so you can continue
     await page.waitForSelector("#join-neu-overlay");
@@ -20,13 +20,13 @@ export async function goToCartPage(cluster: any, url: any) {
     );
 
     //clicking on continue button and navigate to shipping form page
-    await continueToShipping.evaluate((button: any) => button.click());
+    await continueToShipping.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
 
     //navigate to shipping page
     await goToShipingForm(page);
 
     await cluster.idle();
-    /* await cluster.close();  */
+    await cluster.close(); 
   });
   await cluster.queue(url);
 }
@@ -61,10 +61,16 @@ async function goToShipingForm(page: any) {
   const continueToPayment = await page.$(
     "#shipping-address-form > div:nth-child(2) > button"
   );
-  await continueToPayment.evaluate((button: any) => button.click());
+  await continueToPayment.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
 
+  //choosing payment method
   await page.waitForSelector("#gpay_panonly-radio--paymentstep");
   const gpay = await page.$("#gpay_panonly-radio--paymentstep");
-  await gpay.evaluate((button: any) => button.click());
+  await gpay.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
+
+  //after choosing a method show button to review your order and proces is done
+  await page.waitForSelector("div.wt-mb-xs-1.wt-mb-md-2.wt-position-relative.wt-bb-xs > div:nth-child(1) > div.wt-mt-xs-2.wt-mt-lg-3 > button");
+  const reviewOrder = await page.$("div.wt-mb-xs-1.wt-mb-md-2.wt-position-relative.wt-bb-xs > div:nth-child(1) > div.wt-mt-xs-2.wt-mt-lg-3 > button");
+  await reviewOrder.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
 }
 

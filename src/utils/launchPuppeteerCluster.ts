@@ -6,6 +6,7 @@ const defaultOptions = {
   monitor: true,
   puppeteerOptions: {
     headless: false,
+    args: ['--disable-features=site-per-process, `--ignore-certificate-errors`'],
     defaultViewport: null,
     userDataDir: "./tmp",
   },

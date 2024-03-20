@@ -8,6 +8,6 @@ export const fs = require("fs");
 export const path = require('path');
 export const Bottleneck = require('bottleneck');
 export const limiter = new Bottleneck({
-    maxConcurrent: 15, // Adjust concurrency as needed
-    minTime: 2000 // Adjust the delay between requests (in milliseconds)
+    maxConcurrent: 15, 
+    minTime: 2000 
   });
