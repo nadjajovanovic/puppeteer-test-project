@@ -9,7 +9,11 @@ export async function goToCartPage(cluster: any, url: any) {
     //extracting proced to checkout
     const proceedToCheckout = await page.$("button.proceed-to-checkout");
     //clicking to button
-    await proceedToCheckout.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
+    try {
+      await proceedToCheckout.evaluate((button: any) => button.click());
+    } catch (error) {
+      console.log(error);
+    }
 
     //waitng for dialog to open so you can continue
     await page.waitForSelector("#join-neu-overlay");
@@ -20,7 +24,11 @@ export async function goToCartPage(cluster: any, url: any) {
     );
 
     //clicking on continue button and navigate to shipping form page
-    await continueToShipping.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
+    try {
+      await continueToShipping.evaluate((button: any) => button.click());
+    } catch (error) {
+      console.log(error);
+    }
 
     //navigate to shipping page
     await goToShipingForm(page);
@@ -61,16 +69,28 @@ async function goToShipingForm(page: any) {
   const continueToPayment = await page.$(
     "#shipping-address-form > div:nth-child(2) > button"
   );
-  await continueToPayment.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
+   try {
+    await continueToPayment.evaluate((button: any) => button.click());
+   } catch (error) {
+    console.log(error);
+   }
 
   //choosing payment method
   await page.waitForSelector("#gpay_panonly-radio--paymentstep");
   const gpay = await page.$("#gpay_panonly-radio--paymentstep");
-  await gpay.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
+  try {
+    await gpay.evaluate((button: any) => button.click());
+  } catch (error) {
+    console.log(error);
+  }
 
   //after choosing a method show button to review your order and proces is done
   await page.waitForSelector("div.wt-mb-xs-1.wt-mb-md-2.wt-position-relative.wt-bb-xs > div:nth-child(1) > div.wt-mt-xs-2.wt-mt-lg-3 > button");
   const reviewOrder = await page.$("div.wt-mb-xs-1.wt-mb-md-2.wt-position-relative.wt-bb-xs > div:nth-child(1) > div.wt-mt-xs-2.wt-mt-lg-3 > button");
-  await reviewOrder.evaluate((button: any) => button.click()).then('Clicked').catch((err: any) => console.log(err));
+  try {
+    await reviewOrder.evaluate((button: any) => button.click());
+  } catch (error) {
+    console.log(error);
+  }
 }
 

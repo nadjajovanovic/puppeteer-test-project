@@ -12,6 +12,10 @@ To start the application use npm start
 
 To start the test use npm test
 
+## npm run dev
+
+To run both npm start and npm test use npm run dev
+
 ## Assumptions
 
 Assumptions I made during development is that sometimes the pages will take longer time to load and render, maybe due to low network connection or complexity of web page. Structure, content or behaviour of the target web page can be changed due to frequently updated web sites or dynamically generated content. Low network connection can impact on page loading and rendering. 
@@ -19,7 +23,7 @@ Assumptions I made during development is that sometimes the pages will take long
 ## Challenges
 
 * Complex HTML structure - HTML of the site is very complex in some cases, so in some cases it was very difficult to find the specific element from structure. I overcome this inspection the element on the browser and querying them through Console in the browser to find the right element
-* I faced with 
+* I faced with some new terminology (puppeteer) so I had to investigate the best solutions to develop some features
 * Sometimes the site was changing its default behaviour (for example: when checking out the cart, instead of opening the dialog - which is default, it directed me to sign in page). Investigating this situation, I found out that maybe my internet connection is preventing access and I just had to change my network connection. 
 
 ## Additionals and improvements

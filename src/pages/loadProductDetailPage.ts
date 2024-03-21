@@ -23,27 +23,50 @@ export async function goToProductDetailsPage(cluster: any, url: any) {
     );
 
     //getting product name, price, description, images from page
-    productName = await productDetailHandle.$eval(
-      "h1.wt-text-body-01.wt-line-height-tight.wt-break-word.wt-mt-xs-1",
-      (el: any) => el.textContent
-    );
-    productPrice = await productDetailHandle.$eval(
-      "p.wt-text-title-larger.wt-mr-xs-1",
-      (el: any) => el.textContent
-    );
-    productDescription = await productDetailHandle.$eval(
-      "div.wt-content-toggle__body p",
-      (el: any) => el.textContent
-    );
-    imageHandle = await page.$$(
-      "ul.wt-list-unstyled.wt-overflow-hidden.wt-position-relative.carousel-pane-list > li"
-    );
+    try {
+      productName = await productDetailHandle.$eval(
+        "h1.wt-text-body-01.wt-line-height-tight.wt-break-word.wt-mt-xs-1",
+        (el: any) => el.textContent
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      productPrice = await productDetailHandle.$eval(
+        "p.wt-text-title-larger.wt-mr-xs-1",
+        (el: any) => el.textContent
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      productDescription = await productDetailHandle.$eval(
+        "div.wt-content-toggle__body p",
+        (el: any) => el.textContent
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      imageHandle = await page.$$(
+        "ul.wt-list-unstyled.wt-overflow-hidden.wt-position-relative.carousel-pane-list > li"
+      );
+    } catch (error) {
+      console.log(error);
+    }
 
     for (const image of imageHandle) {
-      imageUrl = await page.evaluate(
-        (el: any) => el.querySelector("img.wt-max-width-full").getAttribute("src"),
-        image
-      );
+      try {
+        imageUrl = await page.evaluate(
+          (el: any) => el.querySelector("img.wt-max-width-full").getAttribute("src"),
+          image
+        );
+      } catch (error) {
+        console.log(error);
+      }
       productImageUrls.push(imageUrl);
     }
 
@@ -53,7 +76,8 @@ export async function goToProductDetailsPage(cluster: any, url: any) {
       description: productDescription,
       imageUrl: productImageUrls,
     });
-    saveDataToFile(product, `product_detail_${productName.trim()}.json`);
+    
+    //saveDataToFile(product, `product_detail_${productName.trim()}.json`);
 
     //some products require personalization text
     await page.waitForSelector("#listing-page-personalization-textarea");
@@ -66,10 +90,8 @@ export async function goToProductDetailsPage(cluster: any, url: any) {
     const button = await productDetailHandle.$(
       "button.wt-btn.wt-btn--filled.wt-width-full"
     );
-    await button
-      .evaluate((form: any) => form.click())
-      .then(() => console.log("clicked"))
-      .catch((err) => console.log(err));
+    
+    await button.evaluate((form: any) => form.click());
 
     await cluster.idle();
     await cluster.close();

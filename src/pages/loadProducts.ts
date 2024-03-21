@@ -46,24 +46,36 @@ export async function loadProducts() {
     //looping through first 10 products from a page
     for (const productHandle of productHandlesFirst10) {
       //extract products name, price and url from page
-      productName = await page.evaluate(
-        (el: any) => el.querySelector("h2").textContent,
-        productHandle
-      );
+      try {
+        productName = await page.evaluate(
+          (el: any) => el.querySelector("h2").textContent,
+          productHandle
+        );
+      } catch (error) {
+        console.log(error);
+      }
 
-      productPrice = await page.evaluate(
-        (el: any) =>
-          el.querySelector("p.wt-text-title-01.lc-price > span:nth-child(2)")
-            .textContent,
-        productHandle
-      );
+      try {
+        productPrice = await page.evaluate(
+          (el: any) =>
+            el.querySelector("p.wt-text-title-01.lc-price > span:nth-child(2)")
+              .textContent,
+          productHandle
+        );
+      } catch (error) {
+        console.log(error);
+      }
 
-      listingUrl = await page.evaluate(
-        (el: any) =>
-          el.querySelector("div.v2-listing-card > a").getAttribute("href"),
-        productHandle
-      );
-      goToProductDetailsPage(cluster, listingUrl);
+      try {
+        listingUrl = await page.evaluate(
+          (el: any) =>
+            el.querySelector("div.v2-listing-card > a").getAttribute("href"),
+          productHandle
+        );
+        goToProductDetailsPage(cluster, listingUrl);
+      } catch (error) {
+        console.log(error);
+      }
 
       products.push({
         name: productName.trim(),

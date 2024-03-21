@@ -5,7 +5,7 @@ const defaultOptions = {
   maxConcurrency: 100,
   monitor: true,
   puppeteerOptions: {
-    headless: false,
+    headless: true,
     args: ['--disable-features=site-per-process, `--ignore-certificate-errors`'],
     defaultViewport: null,
     userDataDir: "./tmp",
