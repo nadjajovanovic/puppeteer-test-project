@@ -6,8 +6,3 @@ export const anonymizeUaPlugin = require('puppeteer-extra-plugin-anonymize-ua');
 export const stealthPlugin = require('puppeteer-extra-plugin-stealth');
 export const fs = require("fs");
 export const path = require('path');
-export const Bottleneck = require('bottleneck');
-export const limiter = new Bottleneck({
-    maxConcurrent: 15, 
-    minTime: 2000 
-  });

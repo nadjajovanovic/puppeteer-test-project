@@ -1,7 +1,8 @@
-import { limiter, paginationUrl } from "../utils/consts";
+import { baseUrl } from "../utils/consts";
 import launchPuppeteerCluster from "../utils/launchPuppeteerCluster";
+import { limiter } from "../utils/limiter";
 
-const url = paginationUrl;
+const url = baseUrl;
 
 describe("Pagination tests", () => {
   let cluster: any;
@@ -10,7 +11,7 @@ describe("Pagination tests", () => {
   let initialContent: any;
   let updatedContent: any;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     cluster = await launchPuppeteerCluster();
     await cluster.task(async ({ page, data: url }) => {
         await limiter.schedule(async () => {
@@ -27,7 +28,7 @@ describe("Pagination tests", () => {
     await cluster.idle();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await cluster.close();
   });
 

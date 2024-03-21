@@ -1,4 +1,4 @@
-import { limiter } from "../utils/consts";
+import { limiter } from "../utils/limiter";
 
 export async function goToCartPage(cluster: any, url: any) {
   //Navigate to cart page

@@ -1,5 +1,6 @@
-import { baseUrl, limiter } from "../utils/consts";
+import { baseUrl } from "../utils/consts";
 import launchPuppeteerCluster from "../utils/launchPuppeteerCluster";
+import { limiter } from "../utils/limiter";
 
 const url = baseUrl;
 
@@ -9,7 +10,7 @@ describe("Load products tests", () => {
   let listingUrl: any;
   let checkoutPageButton: any;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     cluster = await launchPuppeteerCluster();
     await cluster.task(async ({ page, data: url }) => {
       await limiter.schedule(async () => {
@@ -30,7 +31,7 @@ describe("Load products tests", () => {
     await cluster.idle();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await cluster.close();
   });
 

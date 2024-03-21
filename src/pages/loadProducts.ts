@@ -4,13 +4,13 @@ import { goToCartPage } from "./loadCartPage";
 import {
   anonymizeUaPlugin,
   baseUrl,
-  limiter,
   puppeteer,
   stealthPlugin,
 } from "../utils/consts";
 import { pagination } from "../utils/pagination";
 import launchPuppeteerCluster from "../utils/launchPuppeteerCluster";
 import { saveDataToFile } from "../services/saveDataToFile";
+import { limiter } from "../utils/limiter";
 
 //optimizing
 puppeteer.use(stealthPlugin());

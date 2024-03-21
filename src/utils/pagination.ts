@@ -1,5 +1,5 @@
 import { ElementHandle, Page } from "puppeteer";
-import { limiter } from "./consts";
+import { limiter } from "./limiter";
 
 export async function pagination(
   cluster: any,

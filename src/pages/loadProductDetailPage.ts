@@ -1,5 +1,5 @@
 import { saveDataToFile } from "../services/saveDataToFile";
-import { limiter } from "../utils/consts";
+import { limiter } from "../utils/limiter";
 
 let productName: string;
 let productPrice: string;
